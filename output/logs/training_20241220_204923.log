@@ -1,0 +1,71 @@
+2024-12-20 20:49:23,170 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_204923.log
+2024-12-20 20:49:23,174 - INFO - Script started...
+2024-12-20 20:49:23,174 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:49:23,174 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-20 20:49:23,174 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-20 20:49:23,175 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-20 20:49:23,184 - INFO - Analyzing dataset...
+2024-12-20 20:49:23,184 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:49:23,186 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-20 20:49:23,187 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-20 20:49:23,192 - INFO - Dataset Analysis:
+2024-12-20 20:49:23,193 - INFO -   Number of features: 75
+2024-12-20 20:49:23,194 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-20 20:49:23,194 - INFO -   Sequence length: 30000
+2024-12-20 20:49:23,194 - INFO -   Total Memory: 68.38 GB
+2024-12-20 20:49:23,194 - INFO -   Available Memory: 39.82 GB
+2024-12-20 20:49:23,195 - INFO -   Estimated batch size: 124447185
+2024-12-20 20:49:23,195 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 30000
+  Batch Size: 124447185
+  Output Dim (Chemical): 3
+2024-12-20 20:49:23,196 - INFO - Dataset loaded with 30000 samples.
+2024-12-20 20:49:23,197 - INFO - DataLoader created successfully.
+2024-12-20 20:49:23,232 - INFO - SimpleTransformer initialized:
+  Input Dim: 80
+  Num Heads: 10
+  Num Layers: 2
+  Dim Feedforward: 512
+  Output Dim (Chemical): 3
+  Output Dim (Concentration): 1
+2024-12-20 20:49:23,434 - INFO - Model initialized:
+  Adjusted Features: 80
+  Num Heads: 10
+  Num Layers: 2
+  Output Dim (Chemical): 3
+  Output Dim (Concentration): 1
+2024-12-20 20:49:23,435 - INFO - Starting training loop...
+2024-12-20 20:49:24,468 - INFO - Epoch 1/10 started...
+2024-12-20 20:49:30,402 - INFO - Epoch 1 completed. Average Loss: 3831.0583
+2024-12-20 20:49:30,408 - INFO - New best model saved with loss: 3831.0583
+2024-12-20 20:49:30,408 - INFO - Epoch 2/10 started...
+2024-12-20 20:49:34,140 - INFO - Epoch 2 completed. Average Loss: 3676.0876
+2024-12-20 20:49:34,146 - INFO - New best model saved with loss: 3676.0876
+2024-12-20 20:49:34,146 - INFO - Epoch 3/10 started...
+2024-12-20 20:49:38,001 - INFO - Epoch 3 completed. Average Loss: 3546.7439
+2024-12-20 20:49:38,007 - INFO - New best model saved with loss: 3546.7439
+2024-12-20 20:49:38,007 - INFO - Epoch 4/10 started...
+2024-12-20 20:49:42,019 - INFO - Epoch 4 completed. Average Loss: 3451.6382
+2024-12-20 20:49:42,025 - INFO - New best model saved with loss: 3451.6382
+2024-12-20 20:49:42,025 - INFO - Epoch 5/10 started...
+2024-12-20 20:49:45,979 - INFO - Epoch 5 completed. Average Loss: 3387.3037
+2024-12-20 20:49:45,985 - INFO - New best model saved with loss: 3387.3037
+2024-12-20 20:49:45,985 - INFO - Epoch 6/10 started...
+2024-12-20 20:49:49,806 - INFO - Epoch 6 completed. Average Loss: 3345.5044
+2024-12-20 20:49:49,812 - INFO - New best model saved with loss: 3345.5044
+2024-12-20 20:49:49,812 - INFO - Epoch 7/10 started...
+2024-12-20 20:49:53,786 - INFO - Epoch 7 completed. Average Loss: 3317.8032
+2024-12-20 20:49:53,791 - INFO - New best model saved with loss: 3317.8032
+2024-12-20 20:49:53,791 - INFO - Epoch 8/10 started...
+2024-12-20 20:49:57,759 - INFO - Epoch 8 completed. Average Loss: 3298.4216
+2024-12-20 20:49:57,764 - INFO - New best model saved with loss: 3298.4216
+2024-12-20 20:49:57,764 - INFO - Epoch 9/10 started...
+2024-12-20 20:50:01,794 - INFO - Epoch 9 completed. Average Loss: 3284.1521
+2024-12-20 20:50:01,799 - INFO - New best model saved with loss: 3284.1521
+2024-12-20 20:50:01,799 - INFO - Epoch 10/10 started...
+2024-12-20 20:50:05,759 - INFO - Epoch 10 completed. Average Loss: 3272.5310
+2024-12-20 20:50:05,763 - INFO - New best model saved with loss: 3272.5310
+2024-12-20 20:50:05,767 - INFO - Final model saved at C:\Users\RodePeters\Desktop\chem_transformer\output\models\final_model.pth

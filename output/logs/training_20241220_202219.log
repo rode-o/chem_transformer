@@ -1,0 +1,93 @@
+2024-12-20 20:22:21,308 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_202219.log
+2024-12-20 20:22:21,309 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_202219.log
+2024-12-20 20:22:21,310 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_202219.log
+2024-12-20 20:22:21,314 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_202219.log
+2024-12-20 20:22:21,314 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_202219.log
+2024-12-20 20:22:21,315 - INFO - Script started...
+2024-12-20 20:22:21,315 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:22:21,315 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-20 20:22:21,315 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-20 20:22:21,315 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-20 20:22:21,315 - INFO - Analyzing dataset...
+2024-12-20 20:22:21,315 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:22:21,317 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-20 20:22:21,317 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-20 20:22:21,325 - INFO - Dataset Analysis:
+2024-12-20 20:22:21,325 - INFO -   Number of features: 75
+2024-12-20 20:22:21,325 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-20 20:22:21,325 - INFO -   Sequence length: 30000
+2024-12-20 20:22:21,325 - INFO -   Total Memory: 68.38 GB
+2024-12-20 20:22:21,325 - INFO -   Available Memory: 39.91 GB
+2024-12-20 20:22:21,325 - INFO -   Estimated batch size: 124732216
+2024-12-20 20:22:21,325 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 30000
+  Batch Size: 124732216
+  Output Dim (Chemical): 3
+2024-12-20 20:22:21,326 - INFO - Dataset loaded with 30000 samples.
+2024-12-20 20:22:21,326 - INFO - DataLoader created successfully.
+2024-12-20 20:22:21,369 - INFO - SimpleTransformer initialized:
+  Input Dim: 80
+  Num Heads: 10
+  Num Layers: 2
+  Dim Feedforward: 512
+  Output Dim (Chemical): 3
+  Output Dim (Concentration): 1
+2024-12-20 20:22:21,535 - INFO - Model initialized:
+  Adjusted Features: 80
+  Num Heads: 10
+  Num Layers: 2
+  Output Dim (Chemical): 3
+  Output Dim (Concentration): 1
+2024-12-20 20:22:21,536 - INFO - Starting training loop...
+2024-12-20 20:22:22,424 - INFO - Epoch 1/10 started...
+2024-12-20 20:22:22,595 - ERROR - Error in __getitem__ at index 22507: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 65, in __getitem__
+    original_features = torch.tensor(self.features[idx], dtype=Config.TENSOR_FLOAT_TYPE)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'
+2024-12-20 20:22:22,913 - ERROR - An error occurred during training: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 40, in train_model
+    for batch_idx, batch in enumerate(dataloader):
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+            ~~~~~~~~~~~~^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 65, in __getitem__
+    original_features = torch.tensor(self.features[idx], dtype=Config.TENSOR_FLOAT_TYPE)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'
+2024-12-20 20:22:22,916 - ERROR - An error occurred: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 74, in main
+    train_model(
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 40, in train_model
+    for batch_idx, batch in enumerate(dataloader):
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+            ~~~~~~~~~~~~^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 65, in __getitem__
+    original_features = torch.tensor(self.features[idx], dtype=Config.TENSOR_FLOAT_TYPE)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Config' has no attribute 'TENSOR_FLOAT_TYPE'

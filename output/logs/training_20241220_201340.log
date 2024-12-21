@@ -1,0 +1,27 @@
+2024-12-20 20:13:42,283 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_201340.log
+2024-12-20 20:13:42,284 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_201340.log
+2024-12-20 20:13:42,285 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_201340.log
+2024-12-20 20:13:42,286 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_201340.log
+2024-12-20 20:13:42,286 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241220_201340.log
+2024-12-20 20:13:42,296 - INFO - Script started...
+2024-12-20 20:13:42,296 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:13:42,296 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-20 20:13:42,297 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-20 20:13:42,297 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-20 20:13:42,297 - INFO - Analyzing dataset...
+2024-12-20 20:13:42,297 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-20 20:13:42,299 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-20 20:13:42,300 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-20 20:13:42,306 - INFO - Dataset Analysis:
+2024-12-20 20:13:42,306 - INFO -   Number of features: 75
+2024-12-20 20:13:42,306 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-20 20:13:42,307 - INFO -   Sequence length: 30000
+2024-12-20 20:13:42,307 - INFO -   Total Memory: 68.38 GB
+2024-12-20 20:13:42,307 - INFO -   Available Memory: 40.34 GB
+2024-12-20 20:13:42,308 - INFO -   Estimated batch size: 126065707
+2024-12-20 20:13:42,308 - ERROR - An error occurred: too many values to unpack (expected 5)
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 33, in main
+    adjusted_features, padding_needed, num_features, sequence_length, batch_size = analyze_data(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
