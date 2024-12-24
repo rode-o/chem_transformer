@@ -7,30 +7,30 @@ def setup_logger(name=__name__, level=logging.INFO):
 
     Args:
         name (str): Name of the logger, typically `__name__`.
-        level (int): Logging level for the specific logger (default: INFO).
+        level (int): Logging level for the specific logger (default: DEBUG).
 
     Returns:
         logging.Logger: Configured logger.
     """
-    logger = logging.getLogger(name)  # Use hierarchical logger names
+    logger = logging.getLogger(name)
     logger.setLevel(level)
 
-    # Configure the root logger once to avoid redundant handlers
+    # Configure the root logger only once to avoid duplicate handlers
     if not logging.getLogger().hasHandlers():
         # Add handlers to the root logger
         root_logger = logging.getLogger()
-        root_logger.setLevel(logging.INFO)  # Default to INFO for all loggers
+        root_logger.setLevel(logging.INFO)  # Set root logger to DEBUG for capturing all logs
 
         # Stream handler for console output
         ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
+        ch.setLevel(logging.INFO)  # Set stream handler to DEBUG
         console_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         ch.setFormatter(console_formatter)
         root_logger.addHandler(ch)
 
         # File handler for logging to a file
         fh = logging.FileHandler(Config.LOG_FILE)
-        fh.setLevel(logging.INFO)
+        fh.setLevel(logging.DEBUG)  # Set file handler to DEBUG
         file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         fh.setFormatter(file_formatter)
         root_logger.addHandler(fh)

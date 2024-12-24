@@ -2,7 +2,6 @@ from logger import setup_logger
 import logging
 from pathlib import Path
 import torch
-from torch.utils.data import DataLoader
 from utils import analyze_data, pad_features, ensure_folders_exist
 from dataset import HDF5Dataset
 from model import SimpleTransformer
@@ -34,7 +33,7 @@ def main():
             padding_needed,
             num_features,
             sequence_length,
-            batch_size,
+            batch_size,  # Use this batch size in training
             output_dim_chemical,
         ) = analyze_data(
             h5_file_path,
@@ -51,25 +50,24 @@ def main():
             f"  Output Dim (Chemical): {output_dim_chemical}"
         )
 
-        # Load dataset and create DataLoader
+        # Load dataset
         dataset = HDF5Dataset(
             h5_file_path, adjusted_features, pad_features, sequence_length=sequence_length
         )
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-        logger.info("DataLoader created successfully.")
+        logger.info(f"Dataset loaded with {len(dataset)} sweeps and sequence length {sequence_length}.")
 
         # Initialize the model
         num_heads = adjusted_features // Config.ATTENTION_RESOLUTION
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         model = SimpleTransformer(
-        input_dim=adjusted_features,
-        num_heads=num_heads,
-        num_layers=Config.NUM_LAYERS,
-        output_dim_chemical=output_dim_chemical,
-        output_dim_concentration=1,  # Regression output remains 1-dimensional
+            input_dim=adjusted_features,
+            num_heads=num_heads,
+            num_layers=Config.NUM_LAYERS,
+            output_dim_chemical=output_dim_chemical,
+            output_dim_concentration=1,  # Regression output remains 1-dimensional
         ).to(device)
-        
+
         logger.info(
             "Model initialized:\n"
             f"  Adjusted Features: {adjusted_features}\n"
@@ -83,10 +81,11 @@ def main():
         # Start training
         train_model(
             model=model,
-            dataloader=dataloader,
+            dataset=dataset,  # Pass the dataset directly
             device=device,
             num_epochs=Config.NUM_EPOCHS,
             learning_rate=Config.LEARNING_RATE,
+            batch_size=batch_size,  # Pass calculated batch size
             early_stopping=Config.EARLY_STOPPING,
             early_stopping_patience=Config.EARLY_STOPPING_PATIENCE,
         )

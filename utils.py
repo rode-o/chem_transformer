@@ -116,24 +116,35 @@ def analyze_data(h5_file_path, attention_resolution=Config.ATTENTION_RESOLUTION,
             # Calculate padding
             adjusted_features, padding_needed = calculate_padding(num_features, attention_resolution)
 
-            # Estimate batch size based on memory
+            # Memory-based batch size estimation
             memory = psutil.virtual_memory()
             available_memory_gb = memory.available / 1e9 - reserved_memory_gb
-            feature_size = h5_file["Features"].dtype.itemsize
-            sample_size = adjusted_features * feature_size
-            batch_size = int((available_memory_gb * 1e9) // sample_size)
+
+            # Calculate memory usage for a single sweep
+            feature_size = h5_file["Features"].dtype.itemsize  # Size in bytes per feature
+            memory_per_sweep = sequence_length * adjusted_features * feature_size  # Memory per sweep
+
+            # Estimate max batch size based on available memory
+            max_batch_size_by_memory = int((available_memory_gb * 1e9) // memory_per_sweep)
+
+            # Cap batch size by total number of sweeps
+            num_sweeps = len(boundaries) - 1  # Total number of sweeps
+            batch_size = min(max_batch_size_by_memory, num_sweeps)
 
             # Log analysis details
             logger.info(f"Dataset Analysis:")
             logger.info(f"  Number of features: {num_features}")
             logger.info(f"  Adjusted features: {adjusted_features} (with {padding_needed} padding)")
             logger.info(f"  Sequence length: {sequence_length}")
+            logger.info(f"  Number of sweeps: {num_sweeps}")
             logger.info(f"  Total Memory: {memory.total / 1e9:.2f} GB")
             logger.info(f"  Available Memory: {available_memory_gb:.2f} GB")
-            logger.info(f"  Estimated batch size: {batch_size}")
+            logger.info(f"  Estimated max batch size by memory: {max_batch_size_by_memory}")
+            logger.info(f"  Final batch size (limited by sweeps): {batch_size}")
 
             return adjusted_features, padding_needed, num_features, sequence_length, batch_size, unique_chemicals
 
     except Exception as e:
         logger.error(f"Error analyzing data: {e}", exc_info=True)
         raise
+

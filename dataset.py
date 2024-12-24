@@ -64,29 +64,23 @@ class HDF5Dataset:
         return self.num_sweeps
 
     def __getitem__(self, idx):
-        """
-        Retrieve a single sweep from the dataset and pad its features.
-
-        Args:
-            idx (int): Index of the sweep to retrieve.
-
-        Returns:
-            dict: A dictionary containing the padded features and other attributes.
-        """
         try:
             logger.debug(f"Retrieving sweep at index {idx}")
 
             # Compute start and end indices for the sweep
             start_idx = idx * self.sequence_length
             end_idx = start_idx + self.sequence_length
+            logger.debug(f"Start index: {start_idx}, End index: {end_idx}")
 
             # Retrieve original features for the sweep
             original_features = torch.tensor(
                 self.features[start_idx:end_idx], dtype=Config.TENSOR_FLOAT_TYPE
             )
+            logger.debug(f"Original features shape: {original_features.shape}")
 
             # Pad the features if necessary
             padded_features = self.pad_function(original_features, self.adjusted_features)
+            logger.debug(f"Padded features shape: {padded_features.shape}")
 
             # Retrieve corresponding metadata
             chemical = torch.tensor(self.chemical[idx], dtype=Config.TENSOR_LONG_TYPE)
