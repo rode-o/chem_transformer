@@ -1,8 +1,9 @@
-import logging
+cimport logging
 import torch
 import h5py
 from utils import pad_features
 from logger import setup_logger
+from preprocessing import preprocess_data
 
 # Initialize logger for this script
 logger = setup_logger(name=__name__, level=logging.DEBUG)
@@ -80,7 +81,7 @@ class HDF5Dataset:
             idx (int): Index of the sweep to retrieve.
 
         Returns:
-            dict: A dictionary containing the padded features and other attributes.
+            dict: A dictionary containing the preprocessed features and other attributes.
         """
         try:
             logger.debug(f"Retrieving data for index {idx}...")
@@ -88,57 +89,20 @@ class HDF5Dataset:
             # Compute indices for slicing
             start_idx = idx * self.sequence_length
             end_idx = start_idx + self.sequence_length
-            logger.debug(f"Start index: {start_idx}, End index: {end_idx}")
 
-            # Retrieve features
-            features = torch.tensor(self.features[start_idx:end_idx], dtype=torch.float32)
-            logger.debug(f"Features shape: {features.shape}")
-
-            # Pad features if necessary
-            padded_features = self.pad_function(features, self.adjusted_features)
-            logger.debug(f"Padded features shape: {padded_features.shape}")
-
-            # Retrieve chemical indices and convert to multi-hot
-            chemical_indices = torch.tensor(self.chemical[idx], dtype=torch.int64)
-            logger.debug(f"Chemical indices: {chemical_indices} Shape: {chemical_indices.shape}")
-
-            # Perform one-hot encoding dynamically
-            if chemical_indices.dim() == 0:
-                chemical_indices = chemical_indices.unsqueeze(0)
-
-            chemical = torch.nn.functional.one_hot(chemical_indices, num_classes=self.num_chemicals).sum(dim=0).float()
-            logger.debug(f"Chemical (multi-hot): {chemical} Shape: {chemical.shape}")
-
-            # Retrieve concentration
-            concentration = torch.tensor(self.concentration[idx], dtype=torch.float32)
-            logger.debug(f"Concentration: {concentration} Shape: {concentration.shape}")
-
-            # Retrieve experiment number
-            experiment_number = torch.tensor(self.experiment_number[idx], dtype=torch.int64)
-            logger.debug(f"Experiment number: {experiment_number}")
-
-            # Retrieve frequency data
-            frequency = torch.tensor(self.frequency[start_idx:end_idx], dtype=torch.float32)
-            logger.debug(f"Frequency shape: {frequency.shape}")
-
-            # Validate tensor shapes
-            assert padded_features.shape[1] == self.adjusted_features, (
-                f"Padded features shape mismatch: {padded_features.shape}"
-            )
-            assert chemical.shape[0] == self.num_chemicals, (
-                f"Chemical multi-hot vector shape mismatch: {chemical.shape}"
-            )
-            assert len(concentration.shape) == 1, (
-                f"Concentration vector should be 1D but got: {concentration.shape}"
-            )
-
-            return {
-                "features": padded_features,
-                "chemical": chemical,
-                "concentration": concentration,
-                "experiment_number": experiment_number,
-                "frequency": frequency,
+            # Raw data retrieval
+            raw_data = {
+                "features": torch.tensor(self.features[start_idx:end_idx], dtype=torch.float32),
+                "chemical": self.chemical[idx],
+                "concentration": self.concentration[idx],
+                "frequency": torch.tensor(self.frequency[start_idx:end_idx], dtype=torch.float32),
             }
+
+            # Apply preprocessing
+            preprocessed_data = preprocess_data(raw_data, num_chemicals=self.num_chemicals)
+
+            logger.debug(f"Preprocessed data at index {idx}")
+            return preprocessed_data
 
         except Exception as e:
             logger.error(f"Error in __getitem__ at index {idx}: {e}", exc_info=True)

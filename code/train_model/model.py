@@ -96,4 +96,5 @@ class MultiChemicalTransformer(nn.Module):
 
         # Final log before returning
         logger.debug("Returning chemical presence and concentrations outputs.")
+
         return chemical_presence, chemical_concentrations
