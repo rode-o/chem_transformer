@@ -13,19 +13,19 @@ logger = setup_logger(name="train", level=logging.INFO)
 
 def calculate_metrics(output_chemical, target_chemical, output_concentration, target_concentration):
     """
-    Calculate validation metrics for classification and regression tasks.
+    Calculate validation metrics for multi-chemical classification and regression tasks.
 
     Args:
-        output_chemical (torch.Tensor): Model predictions for classification.
-        target_chemical (torch.Tensor): Ground truth for classification.
+        output_chemical (torch.Tensor): Model predictions for chemical classification (multi-hot).
+        target_chemical (torch.Tensor): Ground truth for chemical classification.
         output_concentration (torch.Tensor): Model predictions for regression.
         target_concentration (torch.Tensor): Ground truth for regression.
 
     Returns:
         dict: Calculated metrics (accuracy and R²).
     """
-    # Accuracy for classification
-    _, predicted_classes = torch.max(output_chemical, 1)
+    # Accuracy for multi-hot classification (thresholded at 0.5)
+    predicted_classes = (torch.sigmoid(output_chemical) > 0.5).float()
     accuracy = (predicted_classes == target_chemical).float().mean().item()
 
     # R² for regression
@@ -63,7 +63,7 @@ def train_model(
     try:
         logger.info("Starting training loop...")
 
-        # Split dataset into training and validation sets based on Config.VALIDATION_SPLIT
+        # Split dataset into training and validation sets
         dataset_size = len(dataset)
         val_size = int(dataset_size * Config.VALIDATION_SPLIT)
         train_size = dataset_size - val_size
@@ -81,8 +81,8 @@ def train_model(
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
         # Define loss functions and optimizer
-        classification_criterion = nn.CrossEntropyLoss()
-        regression_criterion = nn.MSELoss()
+        classification_criterion = nn.BCEWithLogitsLoss()  # Multi-hot classification
+        regression_criterion = nn.MSELoss()  # Regression
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
         best_loss = float("inf")
@@ -106,7 +106,7 @@ def train_model(
 
                 # Calculate losses
                 classification_loss = classification_criterion(output_chemical, target_chemical)
-                regression_loss = regression_criterion(output_concentration.view(-1), target_concentration)
+                regression_loss = regression_criterion(output_concentration, target_concentration)
                 loss = classification_loss + regression_loss
                 total_train_loss += loss.item()
 
@@ -132,20 +132,13 @@ def train_model(
 
                     # Calculate losses
                     classification_loss = classification_criterion(output_chemical, target_chemical)
-                    regression_loss = regression_criterion(output_concentration.view(-1), target_concentration)
+                    regression_loss = regression_criterion(output_concentration, target_concentration)
                     total_val_loss += classification_loss.item() + regression_loss.item()
 
                     # Calculate metrics
-                    if "accuracy" in Config.VALIDATION_METRICS:
-                        _, predicted_classes = torch.max(output_chemical, 1)
-                        accuracy = (predicted_classes == target_chemical).float().mean().item()
-                        all_metrics["accuracy"] += accuracy
-                    if "r2" in Config.VALIDATION_METRICS:
-                        r2 = r2_score(
-                            target_concentration.detach().cpu().numpy(),
-                            output_concentration.detach().cpu().numpy(),
-                        )
-                        all_metrics["r2"] += r2
+                    metrics = calculate_metrics(output_chemical, target_chemical, output_concentration, target_concentration)
+                    for metric, value in metrics.items():
+                        all_metrics[metric] += value
 
             # Average validation metrics
             avg_val_loss = total_val_loss / len(val_loader)
