@@ -1,0 +1,110 @@
+2024-12-25 01:29:06,780 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241225_012906.log
+2024-12-25 01:29:08,589 - INFO - Script started...
+2024-12-25 01:29:08,589 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-25 01:29:08,589 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-25 01:29:08,590 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-25 01:29:08,590 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-25 01:29:08,600 - INFO - Analyzing dataset...
+2024-12-25 01:29:08,600 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-25 01:29:08,623 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-25 01:29:08,625 - INFO - Detecting sweep lengths...
+2024-12-25 01:29:08,635 - INFO - Detected 300 sweeps.
+2024-12-25 01:29:08,636 - INFO - Longest sweep length: 100
+2024-12-25 01:29:08,636 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-25 01:29:08,650 - INFO - Dataset Analysis:
+2024-12-25 01:29:08,651 - INFO -   Number of features: 75
+2024-12-25 01:29:08,651 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-25 01:29:08,651 - INFO -   Sequence length: 100
+2024-12-25 01:29:08,651 - INFO -   Number of sweeps: 300
+2024-12-25 01:29:08,652 - INFO -   Total Memory: 68.38 GB
+2024-12-25 01:29:08,652 - INFO -   Available Memory: 47.60 GB
+2024-12-25 01:29:08,652 - INFO -   Estimated max batch size by memory: 1487461
+2024-12-25 01:29:08,652 - INFO -   Final batch size (limited by sweeps): 300
+2024-12-25 01:29:08,653 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 100
+  Batch Size: 300
+  Number of Chemicals: 3
+2024-12-25 01:29:08,654 - INFO - Initializing HDF5Dataset with file: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-25 01:29:08,655 - INFO - Dataset initialized: 300 sweeps, sequence length 100, num chemicals 3.
+2024-12-25 01:29:08,656 - INFO - Dataset loaded with 300 sweeps and sequence length 100.
+2024-12-25 01:29:10,357 - INFO - MultiChemicalTransformer initialized:
+  Input Dim: 80
+  Num Heads: 10
+  Num Layers: 2
+  Dim Feedforward: 512
+  Number of Chemicals: 3
+2024-12-25 01:29:10,579 - INFO - Model initialized:
+  Adjusted Features: 80
+  Num Heads: 10
+  Num Layers: 2
+  Sequence Length: 100
+  Number of Chemicals: 3
+2024-12-25 01:29:10,579 - INFO - Starting training loop...
+2024-12-25 01:29:10,580 - INFO - Splitting dataset: 240 training samples, 60 validation samples.
+2024-12-25 01:29:12,847 - INFO - Epoch 1/1000 started...
+2024-12-25 01:29:12,849 - DEBUG - Retrieving data for index 6...
+2024-12-25 01:29:12,849 - DEBUG - Start index: 600, End index: 700
+2024-12-25 01:29:12,849 - DEBUG - Features shape: torch.Size([100, 75])
+2024-12-25 01:29:12,850 - DEBUG - Padded features shape: torch.Size([100, 80])
+2024-12-25 01:29:12,850 - DEBUG - Chemical indices: 0 Shape: torch.Size([])
+2024-12-25 01:29:12,853 - DEBUG - Chemical (multi-hot): tensor([1., 0., 0.]) Shape: torch.Size([3])
+2024-12-25 01:29:12,854 - DEBUG - Concentration: 10.0 Shape: torch.Size([])
+2024-12-25 01:29:12,854 - DEBUG - Experiment number: 0
+2024-12-25 01:29:12,854 - DEBUG - Frequency shape: torch.Size([100])
+2024-12-25 01:29:12,854 - ERROR - Error in __getitem__ at index 6: Concentration vector should be 1D but got: torch.Size([])
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 131, in __getitem__
+    assert len(concentration.shape) == 1, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Concentration vector should be 1D but got: torch.Size([])
+2024-12-25 01:29:12,883 - ERROR - An error occurred during training: Concentration vector should be 1D but got: torch.Size([])
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 97, in train_model
+    for batch in train_loader:
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 50, in fetch
+    data = self.dataset.__getitems__(possibly_batched_index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in __getitems__
+    return [self.dataset[self.indices[idx]] for idx in indices]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in <listcomp>
+    return [self.dataset[self.indices[idx]] for idx in indices]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 131, in __getitem__
+    assert len(concentration.shape) == 1, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Concentration vector should be 1D but got: torch.Size([])
+2024-12-25 01:29:12,919 - ERROR - An error occurred: Concentration vector should be 1D but got: torch.Size([])
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 85, in main
+    train_model(
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 97, in train_model
+    for batch in train_loader:
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 50, in fetch
+    data = self.dataset.__getitems__(possibly_batched_index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in __getitems__
+    return [self.dataset[self.indices[idx]] for idx in indices]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in <listcomp>
+    return [self.dataset[self.indices[idx]] for idx in indices]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 131, in __getitem__
+    assert len(concentration.shape) == 1, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Concentration vector should be 1D but got: torch.Size([])

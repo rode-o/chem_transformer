@@ -6,15 +6,19 @@ class Config:
     # General Settings
     ATTENTION_RESOLUTION = 8
     NUM_LAYERS = 2
-    OUTPUT_DIM_CHEMICAL = 10  # Classification output dimensions (e.g., number of classes)
+    OUTPUT_DIM_CHEMICAL = None  # Dynamically determined by the dataset
     OUTPUT_DIM_CONCENTRATION = 1  # Regression output dimensions (single value)
-    NUM_EPOCHS = 10
+    NUM_EPOCHS = 1000
     LEARNING_RATE = 0.001
-    RESERVED_MEMORY_GB = 1
-    
+    RESERVED_MEMORY_GB = 0  # Memory isn't a concern; setting to zero
+
     # Data Type for Tensor Conversion
-    TENSOR_FLOAT_TYPE = torch.float32  # Default tensor float type
+    TENSOR_FLOAT_TYPE = torch.float32  # Increased precision
     TENSOR_LONG_TYPE = torch.long  # Default tensor long type for integer targets
+
+    # Validation Settings
+    VALIDATION_SPLIT = 0.2  # 20% of the dataset reserved for validation
+    VALIDATION_METRICS = ["accuracy", "r2"]  # Metrics for evaluation during validation
 
     # Paths
     PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -27,7 +31,7 @@ class Config:
 
     # Optional Training Settings
     EARLY_STOPPING = True
-    EARLY_STOPPING_PATIENCE = 5
+    EARLY_STOPPING_PATIENCE = 100
 
     # Ensure all required directories exist
     @staticmethod

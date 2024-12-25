@@ -1,0 +1,91 @@
+2024-12-24 17:03:18,631 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241224_170318.log
+2024-12-24 17:03:20,178 - INFO - Script started...
+2024-12-24 17:03:20,179 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 17:03:20,180 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-24 17:03:20,181 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-24 17:03:20,181 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-24 17:03:20,193 - INFO - Analyzing dataset...
+2024-12-24 17:03:20,193 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 17:03:20,197 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-24 17:03:20,198 - INFO - Detecting sweep lengths...
+2024-12-24 17:03:20,206 - INFO - Detected 300 sweeps.
+2024-12-24 17:03:20,206 - INFO - Longest sweep length: 100
+2024-12-24 17:03:20,207 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-24 17:03:20,214 - INFO - Dataset Analysis:
+2024-12-24 17:03:20,215 - INFO -   Number of features: 75
+2024-12-24 17:03:20,215 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-24 17:03:20,216 - INFO -   Sequence length: 100
+2024-12-24 17:03:20,216 - INFO -   Number of sweeps: 300
+2024-12-24 17:03:20,217 - INFO -   Total Memory: 68.38 GB
+2024-12-24 17:03:20,217 - INFO -   Available Memory: 48.84 GB
+2024-12-24 17:03:20,218 - INFO -   Estimated max batch size by memory: 1526199
+2024-12-24 17:03:20,219 - INFO -   Final batch size (limited by sweeps): 300
+2024-12-24 17:03:20,219 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 100
+  Batch Size: 300
+  Number of Chemicals: 3
+2024-12-24 17:03:20,222 - INFO - Dataset loaded with 300 sweeps and sequence length 100.
+2024-12-24 17:03:20,223 - INFO - Dataset loaded with 300 sweeps and sequence length 100.
+2024-12-24 17:03:21,943 - INFO - MultiChemicalTransformer initialized:
+  Input Dim: 80
+  Num Heads: 10
+  Num Layers: 2
+  Dim Feedforward: 512
+  Number of Chemicals: 3
+2024-12-24 17:03:22,129 - INFO - Model initialized:
+  Adjusted Features: 80
+  Num Heads: 10
+  Num Layers: 2
+  Sequence Length: 100
+  Number of Chemicals: 3
+2024-12-24 17:03:22,130 - INFO - Starting training loop...
+2024-12-24 17:03:22,131 - INFO - Splitting dataset: 240 training samples, 60 validation samples.
+2024-12-24 17:03:24,408 - INFO - Epoch 1/1000 started...
+2024-12-24 17:03:24,456 - DEBUG - Initial input tensor shape: torch.Size([240, 100, 80]) (batch_size, sequence_length, input_dim expected)
+2024-12-24 17:03:24,456 - DEBUG - Input tensor dtype: torch.float32
+2024-12-24 17:03:27,404 - DEBUG - After Transformer encoder: shape=torch.Size([240, 100, 80]), dtype=torch.float32
+2024-12-24 17:03:27,406 - DEBUG - After mean pooling: shape=torch.Size([240, 80]), dtype=torch.float32
+2024-12-24 17:03:27,406 - DEBUG - Generating chemical presence predictions...
+2024-12-24 17:03:27,410 - DEBUG - Chemical presence output shape: torch.Size([240, 3]), dtype=torch.float32
+2024-12-24 17:03:27,410 - DEBUG - Generating chemical concentration predictions...
+2024-12-24 17:03:27,410 - DEBUG - Chemical concentrations output shape: torch.Size([240, 3]), dtype=torch.float32
+2024-12-24 17:03:27,410 - DEBUG - Returning chemical presence and concentrations outputs.
+2024-12-24 17:03:27,410 - ERROR - An error occurred during training: Target size (torch.Size([240])) must be the same as input size (torch.Size([240, 3]))
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 108, in train_model
+    classification_loss = classification_criterion(output_chemical, target_chemical)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\loss.py", line 819, in forward
+    return F.binary_cross_entropy_with_logits(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\functional.py", line 3624, in binary_cross_entropy_with_logits
+    raise ValueError(
+ValueError: Target size (torch.Size([240])) must be the same as input size (torch.Size([240, 3]))
+2024-12-24 17:03:27,420 - ERROR - An error occurred: Target size (torch.Size([240])) must be the same as input size (torch.Size([240, 3]))
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 80, in main
+    train_model(
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 108, in train_model
+    classification_loss = classification_criterion(output_chemical, target_chemical)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\modules\loss.py", line 819, in forward
+    return F.binary_cross_entropy_with_logits(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\nn\functional.py", line 3624, in binary_cross_entropy_with_logits
+    raise ValueError(
+ValueError: Target size (torch.Size([240])) must be the same as input size (torch.Size([240, 3]))

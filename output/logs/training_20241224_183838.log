@@ -1,0 +1,44 @@
+2024-12-24 18:38:38,906 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241224_183838.log
+2024-12-24 18:38:40,447 - INFO - Script started...
+2024-12-24 18:38:40,447 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 18:38:40,447 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-24 18:38:40,448 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-24 18:38:40,448 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-24 18:38:40,459 - INFO - Analyzing dataset...
+2024-12-24 18:38:40,459 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 18:38:40,464 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-24 18:38:40,465 - INFO - Detecting sweep lengths...
+2024-12-24 18:38:40,471 - INFO - Detected 300 sweeps.
+2024-12-24 18:38:40,472 - INFO - Longest sweep length: 100
+2024-12-24 18:38:40,472 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-24 18:38:40,479 - INFO - Dataset Analysis:
+2024-12-24 18:38:40,479 - INFO -   Number of features: 75
+2024-12-24 18:38:40,480 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-24 18:38:40,480 - INFO -   Sequence length: 100
+2024-12-24 18:38:40,481 - INFO -   Number of sweeps: 300
+2024-12-24 18:38:40,481 - INFO -   Total Memory: 68.38 GB
+2024-12-24 18:38:40,481 - INFO -   Available Memory: 49.72 GB
+2024-12-24 18:38:40,481 - INFO -   Estimated max batch size by memory: 1553727
+2024-12-24 18:38:40,483 - INFO -   Final batch size (limited by sweeps): 300
+2024-12-24 18:38:40,484 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 100
+  Batch Size: 300
+  Number of Chemicals: 3
+2024-12-24 18:38:40,486 - ERROR - Error initializing HDF5Dataset: type object 'Config' has no attribute 'NUM_CHEMICALS'
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 45, in __init__
+    self.num_chemicals = Config.NUM_CHEMICALS  # Total number of chemicals in the dataset
+                         ^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Config' has no attribute 'NUM_CHEMICALS'
+2024-12-24 18:38:40,488 - ERROR - An error occurred: type object 'Config' has no attribute 'NUM_CHEMICALS'
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 54, in main
+    dataset = HDF5Dataset(
+              ^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 45, in __init__
+    self.num_chemicals = Config.NUM_CHEMICALS  # Total number of chemicals in the dataset
+                         ^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Config' has no attribute 'NUM_CHEMICALS'

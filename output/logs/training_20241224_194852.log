@@ -1,0 +1,110 @@
+2024-12-24 19:48:52,445 - INFO - Logging to file: C:\Users\RodePeters\Desktop\chem_transformer\output\logs\training_20241224_194852.log
+2024-12-24 19:48:54,164 - INFO - Script started...
+2024-12-24 19:48:54,164 - INFO - Attempting to load dataset from: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 19:48:54,164 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output
+2024-12-24 19:48:54,165 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\models
+2024-12-24 19:48:54,165 - INFO - Folder exists: C:\Users\RodePeters\Desktop\chem_transformer\output\logs
+2024-12-24 19:48:54,174 - INFO - Analyzing dataset...
+2024-12-24 19:48:54,174 - INFO - Analyzing dataset at: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 19:48:54,178 - INFO - Number of unique chemicals (output_dim_chemical): 3
+2024-12-24 19:48:54,178 - INFO - Detecting sweep lengths...
+2024-12-24 19:48:54,185 - INFO - Detected 300 sweeps.
+2024-12-24 19:48:54,186 - INFO - Longest sweep length: 100
+2024-12-24 19:48:54,186 - INFO - Adjusted features: 80 (with 5 padding)
+2024-12-24 19:48:54,194 - INFO - Dataset Analysis:
+2024-12-24 19:48:54,194 - INFO -   Number of features: 75
+2024-12-24 19:48:54,194 - INFO -   Adjusted features: 80 (with 5 padding)
+2024-12-24 19:48:54,194 - INFO -   Sequence length: 100
+2024-12-24 19:48:54,194 - INFO -   Number of sweeps: 300
+2024-12-24 19:48:54,194 - INFO -   Total Memory: 68.38 GB
+2024-12-24 19:48:54,195 - INFO -   Available Memory: 48.48 GB
+2024-12-24 19:48:54,195 - INFO -   Estimated max batch size by memory: 1514903
+2024-12-24 19:48:54,196 - INFO -   Final batch size (limited by sweeps): 300
+2024-12-24 19:48:54,196 - INFO - Dataset analysis complete:
+  Adjusted Features: 80
+  Padding Needed: 5
+  Number of Features: 75
+  Sequence Length: 100
+  Batch Size: 300
+  Number of Chemicals: 3
+2024-12-24 19:48:54,197 - INFO - Initializing HDF5Dataset with file: C:\Users\RodePeters\Desktop\chem_transformer\synth_data_h5\synthetic_dataset.h5
+2024-12-24 19:48:54,199 - INFO - Dataset initialized: 300 sweeps, sequence length 100, num chemicals 3.
+2024-12-24 19:48:54,199 - INFO - Dataset loaded with 300 sweeps and sequence length 100.
+2024-12-24 19:48:55,880 - INFO - MultiChemicalTransformer initialized:
+  Input Dim: 80
+  Num Heads: 10
+  Num Layers: 2
+  Dim Feedforward: 512
+  Number of Chemicals: 3
+2024-12-24 19:48:55,991 - INFO - Model initialized:
+  Adjusted Features: 80
+  Num Heads: 10
+  Num Layers: 2
+  Sequence Length: 100
+  Number of Chemicals: 3
+2024-12-24 19:48:55,992 - INFO - Starting training loop...
+2024-12-24 19:48:55,992 - INFO - Splitting dataset: 240 training samples, 60 validation samples.
+2024-12-24 19:48:58,396 - INFO - Epoch 1/1000 started...
+2024-12-24 19:48:58,398 - DEBUG - Retrieving data for index 42...
+2024-12-24 19:48:58,398 - DEBUG - Start index: 4200, End index: 4300
+2024-12-24 19:48:58,399 - DEBUG - Features shape: torch.Size([100, 75])
+2024-12-24 19:48:58,399 - DEBUG - Padded features shape: torch.Size([100, 80])
+2024-12-24 19:48:58,400 - DEBUG - Chemical indices: 0 Shape: torch.Size([])
+2024-12-24 19:48:58,400 - DEBUG - Chemical (multi-hot): 1.0 Shape: torch.Size([])
+2024-12-24 19:48:58,400 - DEBUG - Concentration: 10.0 Shape: torch.Size([])
+2024-12-24 19:48:58,401 - DEBUG - Experiment number: 0
+2024-12-24 19:48:58,401 - DEBUG - Frequency shape: torch.Size([100])
+2024-12-24 19:48:58,401 - ERROR - Error in __getitem__ at index 42: tuple index out of range
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 124, in __getitem__
+    assert chemical.shape[0] == self.num_chemicals, (
+           ~~~~~~~~~~~~~~^^^
+IndexError: tuple index out of range
+2024-12-24 19:48:58,404 - ERROR - An error occurred during training: tuple index out of range
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 97, in train_model
+    for batch in train_loader:
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 50, in fetch
+    data = self.dataset.__getitems__(possibly_batched_index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in __getitems__
+    return [self.dataset[self.indices[idx]] for idx in indices]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in <listcomp>
+    return [self.dataset[self.indices[idx]] for idx in indices]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 124, in __getitem__
+    assert chemical.shape[0] == self.num_chemicals, (
+           ~~~~~~~~~~~~~~^^^
+IndexError: tuple index out of range
+2024-12-24 19:48:58,414 - ERROR - An error occurred: tuple index out of range
+Traceback (most recent call last):
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\main.py", line 85, in main
+    train_model(
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\train.py", line 97, in train_model
+    for batch in train_loader:
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 701, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\_utils\fetch.py", line 50, in fetch
+    data = self.dataset.__getitems__(possibly_batched_index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in __getitems__
+    return [self.dataset[self.indices[idx]] for idx in indices]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Anaconda3\envs\torch_env\Lib\site-packages\torch\utils\data\dataset.py", line 420, in <listcomp>
+    return [self.dataset[self.indices[idx]] for idx in indices]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\RodePeters\Desktop\chem_transformer\code\train_model\dataset.py", line 124, in __getitem__
+    assert chemical.shape[0] == self.num_chemicals, (
+           ~~~~~~~~~~~~~~^^^
+IndexError: tuple index out of range
